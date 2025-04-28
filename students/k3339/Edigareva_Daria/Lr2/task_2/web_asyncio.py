@@ -32,7 +32,7 @@ async def fetch_title(session: aiohttp.ClientSession, url: str) -> tuple:
     start = html.find("<title>")
     end = html.find("</title>")
     if start != -1 and end != -1:
-        title = html[start+7 : end].strip()
+        title = html[start+ len("<title>") : end].strip()
     print(f"[Async] Fetched title for {url}")
     return (url, title)
 

@@ -35,7 +35,6 @@ def fetch_title(url: str):
     end = html.find("</title>")
     if start != -1 and end != -1:
         title = html[start + len("<title>"):end].strip()
-    # Сохраняем результат (потокобезопасно, т.к. GIL защищает операции над списком)
     results.append((url, title))
     print(f"[Thread] Fetched title for {url}")
 
