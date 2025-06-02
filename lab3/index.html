@@ -1,0 +1,902 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+        <title>Index - My Docs</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        
+        
+        
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="../assets/css/darcula-highlight.min.css">
+
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../assets/css/dracula-ui.min.css">
+        <link rel="stylesheet" href="../assets/css/mkdocs.min.css">
+
+        
+            <link  rel="icon" type="image/x-icon" href="../assets/img/favicon.ico">
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+                <script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+
+<body class="drac-bg-black-secondary drac-text-grey-ternary drac-text drac-scrollbar-purple">
+
+    <main class="d-flex">
+
+        <!-- block sidebar -->
+            <nav id="sidebar" class="sidebar drac-bg-black">
+    <div class="custom-menu">
+        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+            <i class="fa fa-bars"></i>
+            <span class="sr-only">Menu</span>
+        </button>
+    </div>
+
+    <div class="p-4">
+        
+
+        <div class="drac-text-center">
+            
+                <span class="drac-text drac-line-height drac-text-white">My Docs</span>
+            
+        </div>
+
+        <div class="drac-box flex-column">
+            <ul class="dot-ul">
+                <li><div class="dot-li drac-bg-cyan"></div></li>
+                <li><div class="dot-li drac-bg-green"></div></li>
+                <li><div class="dot-li drac-bg-orange"></div></li>
+                <li><div class="dot-li drac-bg-pink"></div></li>
+                <li><div class="dot-li drac-bg-purple"></div></li>
+                <li><div class="dot-li drac-bg-red"></div></li>
+                <li><div class="dot-li drac-bg-yellow"></div></li>
+            </ul>
+        </div>
+
+        <hr class="drac-divider" />
+
+        <!-- block menu -->
+        <ul class="mb-5 drac-list drac-list-none">
+            
+            <li class="drac-box">
+                <a href=".."
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Home
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="../lab1/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Lab 1
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="../lab2/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Lab 2
+                </a>
+            </li>
+        </ul>
+        <!-- endblock -->
+    </div>
+</nav>
+        <!-- endblock -->
+
+        <nav class="divider drac-bg-purple-cyan"></nav>
+
+        <div class="content">
+            <!-- block header -->
+                <header>
+    <nav class="navbar navbar-expand-xl drac-bg-purple">
+        <div class="container-fluid">
+            
+            <button class="navbar-toggler w-100 text-center" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsMenu"
+                aria-controls="navbarsMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse flex-column ml-auto" id="navbarsMenu">
+                <ul class="navbar-nav text-md-center">
+
+                    <!-- block preview -->
+                    <li class="nav-item">
+                            
+                    </li>
+                    <!--  endblock -->
+
+                    <!-- block search -->
+                    <li class="nav-item"><div role="search" class="search-box">
+	<form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+		<input type="text" name="q" class="drac-input drac-input-search drac-input-white drac-text-white drac-bg-black-secondary"
+		placeholder="Search docs" title="Type search term here" />
+	</form>
+</div>
+                    </li>
+                    <!--  endblock -->
+
+                    <!-- block source -->
+                    <li class="nav-item">
+                        
+                    </li>
+                    <!--  endblock -->
+
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+</header>
+            <!-- endblock -->
+
+            <!-- block content -->
+                <section class="p-md-5 section-content">
+    <article>
+        <p><h2 id="3-fastapi-docker">Лабораторная работа 3: Упаковка FastAPI приложения в Docker, Работа с источниками данных и Очереди</h2>
+<h3 id="_1">Цель</h3>
+<p>Научиться упаковывать FastAPI приложение в Docker, интегрировать парсер данных с базой данных и вызывать парсер через HTTP и очередь задач (Celery + Redis).</p>
+<h2 id="_2">Структура проекта</h2>
+<pre><code>project_root/
+│
+├── api_service/              # FastAPI API-сервис (основное приложение)
+│   ├── main.py
+│   ├── routes.py
+│   ├── models.py
+│   ├── repository.py
+│   ├── tasks.py
+│   ├── celery_app.py
+│   ├── database.py
+│   ├── requests.py
+│   ├── responses.py
+│   ├── status_enum.py
+│   └── requirements.txt
+│
+├── parser_service/           # FastAPI сервис–парсер
+│   ├── main.py
+│   ├── routes.py
+│   ├── parser.py
+│   ├── redis_listener.py
+│   ├── requests.py
+│   ├── responses.py
+│   └── requirements.txt
+│
+├── docker-compose.yml
+├── Dockerfile.api            # Dockerfile для api_service
+├── Dockerfile.parser         # Dockerfile для parser_service
+└── README.md                 # Инструкция по запуску (при необходимости)
+</code></pre>
+<h2 id="fastapi-docker">Упаковка FastAPI приложения и парсера в Docker</h2>
+<h3 id="11-dockerfile-api-">1.1. Dockerfile для API-сервиса</h3>
+<p><code>api_service</code> — это FastAPI приложение, которое:</p>
+<ul>
+<li>Принимает запросы от клиента (<code>parse_sync</code>, <code>parse_async</code>, <code>status</code>, <code>result</code>).</li>
+<li>Сохраняет информацию о запросах в PostgreSQL (таблица <code>parse_requests</code>).</li>
+<li>Для асинхронного парсинга ставит задачу в очередь Celery (через Redis).</li>
+</ul>
+<p>Ниже приведён пример <code>Dockerfile.api</code>, который упаковывает весь <code>api_service</code> в контейнер:</p>
+<pre><code class="language-dockerfile"># Dockerfile.api
+
+# 1. Базовый образ с Python 3.10 (альтернативно можно взять slim-версию)
+FROM python:3.10-slim
+
+# 2. Устанавливаем рабочую директорию
+WORKDIR /app
+
+# 3. Копируем requirements и устанавливаем зависимости
+COPY api_service/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 4. Копируем исходники API-сервиса
+COPY api_service/ .
+
+# 5. Устанавливаем переменные окружения по умолчанию (при желании)
+ENV DATABASE_URL=postgresql+asyncpg://user:pass@db:5432/app_db
+ENV REDIS_URL=redis://redis:6379/0
+ENV TASK_QUEUE=parser:tasks
+ENV RESULT_PREFIX=parser:results:
+
+# 6. Открываем порт, на котором будет запущен FastAPI
+EXPOSE 8000
+
+# 7. Команда запуска uvicorn (асинхронная, для работы FastAPI)
+CMD [&quot;uvicorn&quot;, &quot;main:app&quot;, &quot;--host&quot;, &quot;0.0.0.0&quot;, &quot;--port&quot;, &quot;8000&quot;]
+</code></pre>
+<h3 id="12-dockerfile-">1.2. Dockerfile для сервиса-парсера</h3>
+<p><code>parser_service</code> — это FastAPI приложение, которое:</p>
+<ul>
+<li>Слушает HTTP-запросы на эндпоинте <code>/fetch</code> и выполняет парсинг (скачивает HTML по URL, извлекает <code>&lt;title&gt;</code> с помощью BeautifulSoup).</li>
+<li>Параллельно, в режиме слушателя (listener) слушает Redis-кью <code>parser:tasks</code>, обрабатывает задачи и кладёт результат в Redis с ключом <code>parser:results:{request_id}</code>.</li>
+</ul>
+<pre><code class="language-dockerfile"># Dockerfile.parser
+
+# 1. Базовый образ Python
+FROM python:3.10-slim
+
+# 2. Рабочая директория
+WORKDIR /app
+
+# 3. Копируем и устанавливаем зависимости
+COPY parser_service/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 4. Копируем исходники парсера
+COPY parser_service/ .
+
+# 5. Устанавливаем переменные окружения
+ENV REDIS_URL=redis://redis:6379/0
+ENV TASK_QUEUE=parser:tasks
+ENV RESULT_PREFIX=parser:results:
+
+# 6. Открываем порт для FastAPI (сервис-парсер может отвечать на HTTP, хотя основной поток – listener)
+EXPOSE 8001
+
+# 7. Команда запуска: uvicorn + запуск background listener в фоновом режиме через tmux/pm2/supervisor
+# Здесь приведён пример запуска listener и FastAPI в одном процессе через shell-скрипт.
+COPY start_parser.sh .
+RUN chmod +x start_parser.sh
+
+CMD [&quot;./start_parser.sh&quot;]
+</code></pre>
+<blockquote>
+<ul>
+<li>Внутри контейнера запускаются одновременно две задачи: FastAPI (для синхронных HTTP запросов) и listener (для обработки задач из очереди).</li>
+<li><code>python -u redis_listener.py</code> — запускает бесконечный цикл <code>start_listener</code>, см. <code>parser_service/redis_listener.py</code>:</li>
+</ul>
+<p>```python
+  import asyncio
+  import json
+  import os
+  import redis.asyncio as aioredis
+  from parser import fetch_html_and_title</p>
+<p>TASK_QUEUE = os.getenv("TASK_QUEUE", "parser:tasks")
+  RESULT_PREFIX = os.getenv("RESULT_PREFIX", "parser:results:")</p>
+<p>async def start_listener(redis: aioredis.Redis) -&gt; None:
+      print("[listener] started, waiting for tasks…")
+      while True:
+          task = await redis.blpop(TASK_QUEUE, timeout=5)
+          if task is None:
+              continue</p>
+<pre><code>      _, raw = task
+      payload = json.loads(raw)
+      req_id = payload["id"]
+      url = payload["url"]
+      print(f"[listener] got task id={req_id} url={url}")
+
+      try:
+          title, html = await fetch_html_and_title(url)
+          result = {"status": "success", "title": title, "html": html}
+      except Exception as err:
+          print(f"[listener] task failed: {err}")
+          result = {"status": "failure", "error": str(err)}
+
+      await redis.set(f"{RESULT_PREFIX}{req_id}", json.dumps(result), ex=3600)
+      print(f"[listener] stored result for id={req_id}")
+</code></pre>
+<p>async def main():
+      redis = aioredis.from_url(os.getenv("REDIS_URL"), decode_responses=True)
+      try:
+          await start_listener(redis)
+      finally:
+          await redis.close()</p>
+<p>if <strong>name</strong> == "<strong>main</strong>":
+      asyncio.run(main())
+  ```</p>
+</blockquote>
+<hr />
+<h3 id="13-docker-compose-docker-composeyml">1.3. Docker Compose: <code>docker-compose.yml</code></h3>
+<p><code>docker-compose.yml</code> объединяет следующие сервисы:</p>
+<ul>
+<li><strong>db</strong> — PostgreSQL (образ <code>postgres:15-alpine</code>).</li>
+<li><strong>redis</strong> — Redis (образ <code>redis:6-alpine</code>).</li>
+<li><strong>api</strong> — контейнер с FastAPI (<code>Dockerfile.api</code>).</li>
+<li><strong>parser</strong> — контейнер с FastAPI + listener (<code>Dockerfile.parser</code>).</li>
+<li><strong>worker</strong> — контейнер с Celery worker (использует код из <code>api_service/celery_app.py</code> и <code>api_service/tasks.py</code>).</li>
+</ul>
+<pre><code class="language-yaml">version: &quot;3.9&quot;
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: postgres_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: app_db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - &quot;5432:5432&quot;
+
+  redis:
+    image: redis:6-alpine
+    container_name: redis_cache
+    restart: unless-stopped
+    ports:
+      - &quot;6379:6379&quot;
+
+  parser:
+    build:
+      context: .
+      dockerfile: Dockerfile.parser
+    container_name: parser_service
+    depends_on:
+      - redis
+    environment:
+      REDIS_URL: &quot;redis://redis:6379/0&quot;
+      TASK_QUEUE: &quot;parser:tasks&quot;
+      RESULT_PREFIX: &quot;parser:results:&quot;
+    ports:
+      - &quot;8001:8001&quot;
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: api_service
+    depends_on:
+      - db
+      - redis
+      - parser
+    environment:
+      DATABASE_URL: &quot;postgresql+asyncpg://user:pass@db:5432/app_db&quot;
+      REDIS_URL: &quot;redis://redis:6379/0&quot;
+      TASK_QUEUE: &quot;parser:tasks&quot;
+      RESULT_PREFIX: &quot;parser:results:&quot;
+    ports:
+      - &quot;8000:8000&quot;
+
+  worker:
+    image: python:3.10-slim
+    container_name: celery_worker
+    working_dir: /app
+    command: celery -A celery_app.celery_app worker --loglevel=info -Q api
+    volumes:
+      - ./api_service:/app
+    depends_on:
+      - api
+      - redis
+      - db
+    environment:
+      DATABASE_URL: &quot;postgresql+asyncpg://user:pass@db:5432/app_db&quot;
+      REDIS_URL: &quot;redis://redis:6379/0&quot;
+      TASK_QUEUE: &quot;parser:tasks&quot;
+      RESULT_PREFIX: &quot;parser:results:&quot;
+
+volumes:
+  db_data:
+</code></pre>
+<blockquote>
+<p><strong>Пояснения к <code>docker-compose.yml</code>:</strong></p>
+<ul>
+<li><code>db</code> и <code>redis</code> запускаются первыми, чтобы их могли использовать остальные сервисы.</li>
+<li><code>parser</code> зависит от <code>redis</code> (очереди задач).</li>
+<li><code>api</code> зависит от <code>db</code>, <code>redis</code> и <code>parser</code>.</li>
+<li><code>worker</code> (Celery) монтирует код из <code>api_service</code> и запускается с командой:</li>
+</ul>
+<p><code>yaml
+  command: celery -A celery_app.celery_app worker --loglevel=info -Q api</code></p>
+<p>где <code>-A celery_app.celery_app</code> указывает Celery “app” (файл <code>api_service/celery_app.py</code>), а <code>-Q api</code> — очередь <code>api</code>, заданная в конфигурации Celery (см. <code>celery_app.py</code>).</p>
+</blockquote>
+<hr />
+<h2 id="http-">Синхронный и асинхронный HTTP-вызов парсера</h2>
+<h3 id="21-fastapi-api_serviceroutespy">2.1. Эндпоинты FastAPI (<code>api_service/routes.py</code>)</h3>
+<h4 id="211-http">2.1.1. Синхронный парсинг через HTTP</h4>
+<p>Эндпоинт <code>GET /parse_sync</code> отправляет HTTP-запрос на парсер (контейнер <code>parser_service</code>) и сразу ждёт ответа:</p>
+<pre><code class="language-python">@router.get(&quot;/parse_sync&quot;)
+async def parse_sync(
+        query: Annotated[ParseSyncQuery, Query()],
+) -&gt; SyncResult:
+    async with httpx.AsyncClient(timeout=10, follow_redirects=True) as client:
+        try:
+            resp = await client.get(PARSER_HTTP, params={&quot;url&quot;: query.url})
+            resp.raise_for_status()
+        except httpx.HTTPError as exc:
+            raise HTTPException(status_code=502, detail=str(exc)) from exc
+
+    data = resp.json()
+    return SyncResult(
+        url=query.url,
+        title=data[&quot;title&quot;],
+        html=data[&quot;html&quot;]
+    )
+</code></pre>
+<ul>
+<li><code>PARSER_HTTP = "http://parser:8001/fetch"</code> — URL парсера внутри сети Docker Compose.</li>
+<li><code>ParseSyncQuery</code> (в <code>api_service/requests.py</code>) имеет поле <code>url: HttpUrl</code>.</li>
+<li>Возвращается модель <code>SyncResult</code> (в <code>api_service/responses.py</code>):</li>
+</ul>
+<p><code>python
+  class SyncResult(BaseModel):
+      title: str
+      html: str
+      url: HttpUrl</code></p>
+<h4 id="212-celery">2.1.2. Асинхронный парсинг (через очередь Celery)</h4>
+<p>Эндпоинт <code>POST /parse_async</code> создаёт запись в базе (таблица <code>parse_requests</code>), ставит задачу в очередь и возвращает <code>request_id</code> + статус:</p>
+<pre><code class="language-python">@router.post(&quot;/parse_async&quot;)
+async def parse_async(
+        payload: ParseAsyncCreate,
+        session: Annotated[AsyncSession, Depends(get_session)],
+) -&gt; ParseAsyncResponse:
+    req = await Repo.create(session, str(payload.url))
+    parse_url_task.delay(req.id, str(payload.url))
+    return ParseAsyncResponse(request_id=req.id, status=req.status)
+</code></pre>
+<ul>
+<li><code>ParseAsyncCreate</code> (в <code>api_service/requests.py</code>):</li>
+</ul>
+<p><code>python
+  class ParseAsyncCreate(BaseModel):
+      url: HttpUrl = Field(..., example="https://example.com")</code>
+* <code>Repo.create()</code> (в <code>api_service/repository.py</code>) создаёт новую запись <code>ParseRequest</code>:</p>
+<p><code>python
+  class ParseRepository:
+      @staticmethod
+      async def create(session: AsyncSession, url: str) -&gt; ParseRequest:
+          req = ParseRequest(url=url, status=StatusEnum.pending)
+          session.add(req)
+          await session.commit()
+          await session.refresh(req)
+          return req</code>
+* <code>parse_url_task.delay(req.id, str(payload.url))</code> — ставит задачу в очередь Celery (очередь <code>api</code>).</p>
+<p>Эндпоинты для проверки статуса и получения результата:</p>
+<pre><code class="language-python">@router.get(&quot;/status/{request_id}&quot;)
+async def status(
+        request_id: int,
+        session: Annotated[AsyncSession, Depends(get_session)],
+) -&gt; StatusResponse:
+    obj = await Repo.by_id(session, request_id)
+    if not obj:
+        raise HTTPException(status_code=404, detail=&quot;Not found&quot;)
+
+    return StatusResponse(request_id=obj.id, status=obj.status)
+</code></pre>
+<pre><code class="language-python">@router.get(&quot;/result/{request_id}&quot;)
+async def result(
+        request_id: int,
+        session: Annotated[AsyncSession, Depends(get_session)],
+) -&gt; ResultResponse:
+    obj = await Repo.by_id(session, request_id)
+    if not obj:
+        raise HTTPException(status_code=404, detail=&quot;Not found&quot;)
+
+    return ResultResponse(
+        request_id=obj.id,
+        status=obj.status,
+        title=obj.title,
+        html=obj.html_content,
+    )
+</code></pre>
+<ul>
+<li><code>StatusResponse</code> и <code>ResultResponse</code> описаны в <code>api_service/responses.py</code>:</li>
+</ul>
+<p>```python
+  class StatusResponse(BaseModel):
+      request_id: int
+      status: StatusEnum</p>
+<p>class ResultResponse(BaseModel):
+      request_id: int
+      status: StatusEnum
+      title: Optional[str] = None
+      html: Optional[str] = None
+  ```</p>
+<blockquote>
+<p><strong>Итог:</strong></p>
+<ul>
+<li><code>GET /parse_sync?url=...</code> — блокирующий синхронный вызов парсера.</li>
+<li><code>POST /parse_async {"url": "..."}</code> — запись в БД + отправка задачи в Celery.</li>
+<li><code>GET /status/{id}</code> и <code>GET /result/{id}</code> — мониторинг и получение результата.</li>
+</ul>
+</blockquote>
+<hr />
+<h2 id="celery-redis">Вызов парсера через очередь (Celery + Redis)</h2>
+<h3 id="31-celery">3.1. Настройка Celery</h3>
+<h4 id="api_servicecelery_apppy"><code>api_service/celery_app.py</code></h4>
+<pre><code class="language-python">from celery import Celery
+import os
+
+REDIS_URL = os.getenv(&quot;REDIS_URL&quot;, &quot;redis://redis:6379/0&quot;)
+
+celery_app = Celery(
+    &quot;api_service&quot;,
+    broker=REDIS_URL,
+    backend=REDIS_URL,
+    include=[&quot;api_service.tasks&quot;],
+)
+
+# Очередь по умолчанию
+celery_app.conf.task_default_queue = &quot;api&quot;
+celery_app.conf.timezone = &quot;UTC&quot;
+</code></pre>
+<ul>
+<li><code>broker=REDIS_URL</code> — используется Redis как брокер сообщений (для передачи задач).</li>
+<li><code>backend=REDIS_URL</code> — Redis же используется для хранения результатов (необязательно, но удобно).</li>
+<li><code>include=["api_service.tasks"]</code> — указываем модуль с задачами.</li>
+</ul>
+<hr />
+<h3 id="32-celery">3.2. Таск для парсинга в Celery</h3>
+<h4 id="api_servicetaskspy"><code>api_service/tasks.py</code></h4>
+<pre><code class="language-python">import asyncio
+import json
+import os
+from time import time, sleep
+
+import redis
+from celery import shared_task
+from sqlalchemy import update
+
+from api_service.celery_app import celery_app
+from api_service.database import AsyncSessionLocal
+from api_service.models import ParseRequest, StatusEnum
+
+REDIS_URL = os.getenv(&quot;REDIS_URL&quot;, &quot;redis://redis:6379/0&quot;)
+TASK_QUEUE = os.getenv(&quot;TASK_QUEUE&quot;, &quot;parser:tasks&quot;)
+RESULT_PREFIX = os.getenv(&quot;RESULT_PREFIX&quot;, &quot;parser:results:&quot;)
+
+@shared_task(name=&quot;api.parse_url&quot;, queue=&quot;api&quot;)
+def parse_url_task(request_id: int, url: str) -&gt; None:
+    &quot;&quot;&quot;
+    1) Кладём задачу в Redis список TASK_QUEUE.
+    2) Блокирующе ждём результат (до 30 секунд).
+    3) Записываем результат в таблицу parse_requests.
+    &quot;&quot;&quot;
+    # Подключаемся к Redis
+    r = redis.Redis.from_url(REDIS_URL, decode_responses=True)
+
+    # 1) Отправляем в очередь
+    payload = json.dumps({&quot;id&quot;: request_id, &quot;url&quot;: url})
+    r.lpush(TASK_QUEUE, payload)
+
+    # 2) Ожидаем результат в Redis под ключом RESULT_PREFIX{request_id}
+    res_key = f&quot;{RESULT_PREFIX}{request_id}&quot;
+    deadline = time() + 30
+    result_data = None
+
+    while time() &lt; deadline:
+        data = r.get(res_key)
+        if data:
+            result_data = json.loads(data)
+            r.delete(res_key)
+            break
+        sleep(1)
+
+    # Функция для записи результата в БД
+    async def _write(status: StatusEnum, title: str | None = None, html: str | None = None):
+        async with AsyncSessionLocal() as session:
+            stmt = (
+                update(ParseRequest)
+                .where(ParseRequest.id == request_id)
+                .values(status=status, title=title, html_content=html)
+            )
+            await session.execute(stmt)
+            await session.commit()
+
+    if not result_data:
+        # Если Timeout
+        asyncio.run(_write(StatusEnum.failure, title=None, html=&quot;Timeout waiting result&quot;))
+        return
+
+    # Если есть результат
+    if result_data.get(&quot;status&quot;) == &quot;success&quot;:
+        asyncio.run(_write(StatusEnum.success,
+                          title=result_data.get(&quot;title&quot;),
+                          html=result_data.get(&quot;html&quot;)))
+    else:
+        asyncio.run(_write(StatusEnum.failure, html=result_data.get(&quot;error&quot;)))
+</code></pre>
+<blockquote>
+<p><strong>Ключевые моменты кода:</strong></p>
+<ol>
+<li><code>shared_task(name="api.parse_url", queue="api")</code> — объявляем Celery-задачу под именем <code>api.parse_url</code>, которая поставится в очередь <code>api</code>.</li>
+<li>Через <code>redis.Redis.from_url(REDIS_URL)</code> подключаемся к Redis.</li>
+<li><code>r.lpush(TASK_QUEUE, payload)</code> — кладём JSON <code>{ "id": request_id, "url": url }</code> в список <code>parser:tasks</code>.</li>
+<li>Блокирующим циклом ждём, пока парсер не положит результат под ключ <code>parser:results:{id}</code> (максимум 30 секунд).</li>
+<li>Запускаем асинхронную запись в PostgreSQL через SQLAlchemy Async (функция <code>_write</code>).</li>
+</ol>
+</blockquote>
+<hr />
+<h3 id="33-redis">3.3. Сервис-парсер: получение задач из Redis и возвращение результата</h3>
+<h4 id="parser_serviceredis_listenerpy"><code>parser_service/redis_listener.py</code></h4>
+<pre><code class="language-python">import asyncio
+import json
+import os
+
+import redis.asyncio as aioredis
+from parser_service.parser import fetch_html_and_title
+
+TASK_QUEUE = os.getenv(&quot;TASK_QUEUE&quot;, &quot;parser:tasks&quot;)
+RESULT_PREFIX = os.getenv(&quot;RESULT_PREFIX&quot;, &quot;parser:results:&quot;)
+
+async def start_listener(redis: aioredis.Redis) -&gt; None:
+    print(&quot;[listener] started, waiting for tasks…&quot;)
+    while True:
+        try:
+            task = await redis.blpop(TASK_QUEUE, timeout=5)
+            if task is None:
+                continue
+
+            _, raw = task
+            payload = json.loads(raw)
+            req_id = payload[&quot;id&quot;]
+            url = payload[&quot;url&quot;]
+            print(f&quot;[listener] got task id={req_id} url={url}&quot;)
+
+            try:
+                title, html = await fetch_html_and_title(url)
+                result = {&quot;status&quot;: &quot;success&quot;, &quot;title&quot;: title, &quot;html&quot;: html}
+            except Exception as err:
+                print(f&quot;[listener] task failed: {err}&quot;)
+                result = {&quot;status&quot;: &quot;failure&quot;, &quot;error&quot;: str(err)}
+
+            await redis.set(f&quot;{RESULT_PREFIX}{req_id}&quot;, json.dumps(result), ex=3600)
+            print(f&quot;[listener] stored result for id={req_id}&quot;)
+        except Exception as exc:
+            print(f&quot;[listener] error: {exc}&quot;)
+            await asyncio.sleep(1)
+
+async def main():
+    redis_url = os.getenv(&quot;REDIS_URL&quot;, &quot;redis://redis:6379/0&quot;)
+    redis = aioredis.from_url(redis_url, decode_responses=True)
+    try:
+        await start_listener(redis)
+    finally:
+        await redis.close()
+
+if __name__ == &quot;__main__&quot;:
+    asyncio.run(main())
+</code></pre>
+<h4 id="parser_serviceparserpy"><code>parser_service/parser.py</code></h4>
+<pre><code class="language-python">import httpx
+from bs4 import BeautifulSoup
+from typing import Tuple
+
+async def fetch_html_and_title(url: str, timeout: float = 10.0) -&gt; Tuple[str, str]:
+    async with httpx.AsyncClient(follow_redirects=True, timeout=timeout) as client:
+        resp = await client.get(url)
+        resp.raise_for_status()
+        html_text = resp.text
+
+    soup = BeautifulSoup(html_text, &quot;lxml&quot;)
+    title_tag = soup.find(&quot;title&quot;)
+    title = title_tag.text.strip() if title_tag else &quot;&quot;
+    return title, html_text
+</code></pre>
+<h4 id="parser_serviceroutespy"><code>parser_service/routes.py</code> (эндпоинт для синхронного парсинга)</h4>
+<pre><code class="language-python">from fastapi import APIRouter, HTTPException, Query
+from parser_service.parser import fetch_html_and_title
+from parser_service.requests import FetchQuery
+from parser_service.responses import FetchResponse
+
+router = APIRouter()
+
+@router.get(
+    &quot;/fetch&quot;,
+    response_model=FetchResponse,
+    summary=&quot;Скачать страницу и вернуть HTML&quot;
+)
+async def fetch(query: Annotated[FetchQuery, Query(...)]):
+    try:
+        title, html = await fetch_html_and_title(str(query.url))
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
+
+    return FetchResponse(url=query.url, title=title, html=html)
+</code></pre>
+<ul>
+<li><code>FetchQuery</code> (в <code>parser_service/requests.py</code>):</li>
+</ul>
+<p><code>python
+  class FetchQuery(BaseModel):
+      url: HttpUrl = Field(..., example="https://example.com")</code>
+* <code>FetchResponse</code> (в <code>parser_service/responses.py</code>):</p>
+<p><code>python
+  class FetchResponse(BaseModel):
+      url: HttpUrl
+      title: str
+      html: str</code>
+* При запуске контейнера <code>parser_service</code> одновременно стартует этот эндпоинт (<code>/fetch</code>) и <code>start_listener</code>, который мониторит очередь.</p>
+<hr />
+<h3 id="34-docker-compose-celery-redis">3.4. Обновление Docker Compose для Celery и Redis</h3>
+<p>В <code>docker-compose.yml</code> (приведён выше) уже добавлены сервисы <code>redis</code> и <code>worker</code>.</p>
+<ul>
+<li><strong>redis</strong>: образ <code>redis:6-alpine</code>, порт <code>6379</code></li>
+<li><strong>worker</strong>: запускает Celery worker с очередью <code>api</code>, монтирует <code>./api_service</code> внутрь контейнера</li>
+</ul>
+<p>Пример клиента Celery внутри контейнера worker:</p>
+<pre><code class="language-yaml">worker:
+  image: python:3.10-slim
+  container_name: celery_worker
+  working_dir: /app
+  command: celery -A celery_app.celery_app worker --loglevel=info -Q api
+  volumes:
+    - ./api_service:/app
+  depends_on:
+    - api
+    - redis
+    - db
+  environment:
+    DATABASE_URL: &quot;postgresql+asyncpg://user:pass@db:5432/app_db&quot;
+    REDIS_URL: &quot;redis://redis:6379/0&quot;
+    TASK_QUEUE: &quot;parser:tasks&quot;
+    RESULT_PREFIX: &quot;parser:results:&quot;
+</code></pre>
+<ul>
+<li><code>celery -A celery_app.celery_app worker</code> — указывает Celery искать объект <code>celery_app</code> в <code>api_service/celery_app.py</code>.</li>
+<li><code>-Q api</code> — слушать очередь <code>api</code> (как настроено в <code>celery_app.conf.task_default_queue</code>).</li>
+<li>Через переменные окружения указываем параметры подключения к Redis и PostgreSQL.</li>
+</ul>
+<p>После поднятия всех контейнеров (<code>docker-compose up --build</code>):</p>
+<ol>
+<li><strong>parser_service</strong> слушает HTTP <code>/fetch</code> и Redis-очередь <code>parser:tasks</code>.</li>
+<li><strong>api_service</strong> слушает HTTP <code>/parse_sync</code>, <code>/parse_async</code>, <code>/status/{}</code>, <code>/result/{}</code>.</li>
+<li><strong>worker</strong> (Celery) получает задачи из Redis-очереди <code>api</code>, выполняет <code>parse_url_task</code>, ставит новые сообщения в Redis для <code>parser_service</code>.</li>
+</ol>
+<hr />
+<h3 id="35-celery">3.5. Эндпоинт для ставновки задачи через Celery</h3>
+<p>Подробно внутри <code>api_service/routes.py</code> рассмотрены:</p>
+<pre><code class="language-python">@router.post(&quot;/parse_async&quot;)
+async def parse_async(
+        payload: ParseAsyncCreate,
+        session: Annotated[AsyncSession, Depends(get_session)],
+) -&gt; ParseAsyncResponse:
+    req = await Repo.create(session, str(payload.url))
+    parse_url_task.delay(req.id, str(payload.url))
+    return ParseAsyncResponse(request_id=req.id, status=req.status)
+</code></pre>
+<ul>
+<li>Создаётся запись в таблице <code>parse_requests</code> (модель <code>api_service/models.py</code>):</li>
+</ul>
+<p><code>python
+  class ParseRequest(Base):
+      __tablename__ = "parse_requests"
+      id: Mapped[int] = mapped_column(primary_key=True)
+      url: Mapped[str]
+      status: Mapped[StatusEnum] = mapped_column(Enum(StatusEnum), default=StatusEnum.pending)
+      title: Mapped[Optional[str]]
+      html_content: Mapped[Optional[str]]
+      created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow, server_default=func.now())
+      updated_at: Mapped[datetime] = mapped_column(default=datetime.utcnow, onupdate=datetime.utcnow, server_default=func.now())</code>
+* Статус каждой задачи хранится в <code>ParseRequest.status</code> (enum <code>pending</code>, <code>processing</code>, <code>success</code>, <code>failure</code>).
+* <code>parse_url_task.delay(req.id, str(payload.url))</code> — отсылает задачу в очередь <code>api</code> (Celery Worker).</p>
+<h4 id="_3">Проверка статуса и получение результата</h4>
+<pre><code class="language-python">@router.get(&quot;/status/{request_id}&quot;)
+async def status(...):
+    obj = await Repo.by_id(session, request_id)
+    if not obj:
+        raise HTTPException(status_code=404, detail=&quot;Not found&quot;)
+    return StatusResponse(request_id=obj.id, status=obj.status)
+</code></pre>
+<pre><code class="language-python">@router.get(&quot;/result/{request_id}&quot;)
+async def result(...):
+    obj = await Repo.by_id(session, request_id)
+    if not obj:
+        raise HTTPException(status_code=404, detail=&quot;Not found&quot;)
+    return ResultResponse(
+        request_id=obj.id,
+        status=obj.status,
+        title=obj.title,
+        html=obj.html_content,
+    )
+</code></pre>
+<hr />
+<h3 id="36">3.6. Периодические задачи (опционально)</h3>
+<p>Celery поддерживает <code>beat</code> для периодических задач (cron-подобных). В <code>celery_app.py</code> добавляем конфиг <code>beat_schedule</code>:</p>
+<pre><code class="language-python">from celery import Celery
+import os
+
+REDIS_URL = os.getenv(&quot;REDIS_URL&quot;, &quot;redis://redis:6379/0&quot;)
+
+celery_app = Celery(
+    &quot;api_service&quot;,
+    broker=REDIS_URL,
+    backend=REDIS_URL,
+    include=[&quot;api_service.tasks&quot;],
+)
+
+celery_app.conf.task_default_queue = &quot;api&quot;
+celery_app.conf.timezone = &quot;UTC&quot;
+
+# Пример периодической задачи: очистка устаревших записей
+celery_app.conf.beat_schedule = {
+    &quot;cleanup_parse_requests_every_midnight&quot;: {
+        &quot;task&quot;: &quot;api.cleanup_parse_requests&quot;,
+        &quot;schedule&quot;: crontab(hour=0, minute=0),
+    },
+}
+</code></pre>
+<ul>
+<li>Для этого потребуется добавить соответствующий таск в <code>api_service/tasks.py</code>:</li>
+</ul>
+<p><code>python
+  @shared_task(name="api.cleanup_parse_requests")
+  def cleanup_parse_requests():
+      # Здесь логика очистки: удалить записи старше N дней
+      pass</code>
+* В <code>docker-compose.yml</code> добавляем сервис <code>beat</code>:</p>
+<p><code>yaml
+  beat:
+    image: python:3.10-slim
+    container_name: celery_beat
+    working_dir: /app
+    command: celery -A celery_app.celery_app beat --loglevel=info
+    volumes:
+      - ./api_service:/app
+    depends_on:
+      - redis
+      - db
+    environment:
+      DATABASE_URL: "postgresql+asyncpg://user:pass@db:5432/app_db"
+      REDIS_URL: "redis://redis:6379/0"</code></p>
+<blockquote>
+<p><strong>Важно:</strong> Периодические задачи не были явно реализованы в коде, приведённом в <code>collected_py_files.json</code>, но этот пример показывает, как их добавить.</p>
+</blockquote>
+<h2 id="_4">Заключение</h2>
+<p>В ходе лабораторной работы были достигнуты следующие результаты:</p>
+<ol>
+<li>
+<p><strong>Контейнеризация</strong>:</p>
+</li>
+<li>
+<p>Созданы <code>Dockerfile.api</code> и <code>Dockerfile.parser</code> для упаковывания FastAPI-сервисов (API и парсера) вместе со всеми зависимостями.</p>
+</li>
+<li>Написан <code>docker-compose.yml</code>, объединяющий сервисы: PostgreSQL, Redis, API, парсер, Celery worker.</li>
+<li>
+<p><strong>Интеграция HTTP-вызова парсера</strong>:</p>
+</li>
+<li>
+<p>Реализован синхронный запрос к эндпоинту <code>/parse_sync</code> (парсер возвращает данные немедленно).</p>
+</li>
+<li>Эндпоинт <code>/parse_async</code>: добавление записи в БД, отправка задачи в Celery-очередь, возвращение <code>request_id</code>.</li>
+<li>Эндпоинты <code>/status/{id}</code> и <code>/result/{id}</code> для мониторинга и получения результата парсинга.</li>
+<li>
+<p><strong>Асинхронная очередь на Celery + Redis</strong>:</p>
+</li>
+<li>
+<p>Настроен Celery (<code>api_service/celery_app.py</code>) для фоновых задач.</p>
+</li>
+<li>Создан таск <code>parse_url_task</code> (в <code>api_service/tasks.py</code>), который отправляет задачу парсеру через Redis, ждёт результат и записывает его в PostgreSQL.</li>
+<li>Парсер (<code>parser_service/redis_listener.py</code>) слушает Redis-очередь <code>parser:tasks</code>, выполняет парсинг и кладёт результат в Redis с ключом <code>parser:results:{id}</code>.</li>
+<li>Celery worker (<code>worker</code>) забирает таски из очереди <code>api</code> и выполняет их.</li>
+</ol>
+<p>В результате:</p>
+<ul>
+<li><strong>FastAPI API</strong> обрабатывает HTTP-запросы, хранит информацию о задаче в PostgreSQL.</li>
+<li><strong>Celery worker</strong> асинхронно организует взаимодействие API ↔ Parser через Redis.</li>
+<li><strong>Parser service</strong> по требованию загружает HTML-страницы, извлекает <code>&lt;title&gt;</code> и возвращает результат в очередь.</li>
+</ul></p>
+    </article>
+</section>
+            <!-- endblock -->
+
+            <!-- block footer -->
+                <footer>
+    <div class="d-flex flex-sm-row justify-content-between py-2 border-top drac-text-black drac-bg-cyan-green">
+        <a href="https://github.com/dracula/mkdocs" target="_blank" style="padding-left: 1%;"
+            class="footer-text drac-anchor drac-text-black drac-text-purple--hover">
+            Made with Dracula Theme for MkDocs
+        </a>
+    </div>
+</footer>
+            <!-- endblock -->
+        </div>
+
+    </main>
+
+        <script>var base_url = '..';</script>
+        <script src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+        <script src="../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../assets/js/mkdocs.js"></script>
+			<script src="../search/main.js" defer></script>
+
+</body>
+
+</html>
